@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/fonts">
+        <file alias="SourceCodePro-Bold.ttf">fonts/SourceCodePro-Bold.ttf</file>
+        <file alias="SourceCodePro-BoldIt.ttf">fonts/SourceCodePro-BoldIt.ttf</file>
+        <file alias="SourceCodePro-It.ttf">fonts/SourceCodePro-It.ttf</file>
+        <file alias="SourceCodePro-Regular.ttf">fonts/SourceCodePro-Regular.ttf</file>
+    </qresource>
+</RCC>
