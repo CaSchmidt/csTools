@@ -19,6 +19,7 @@ add_subdirectory(${csTools_SOURCE_DIR}/../3rdparty/csUtil/csUtil
 )
 
 if(ENABLE_QT)
+  find_package(Qt5Concurrent 5.12 REQUIRED)
   find_package(Qt5Widgets 5.12 REQUIRED)
   find_package(Qt5Xml 5.12 REQUIRED)
 endif()
@@ -31,4 +32,5 @@ add_subdirectory(log2pcap)
 
 if(ENABLE_QT AND ENABLE_QTIMPORT)
   add_subdirectory(BinTools)
+  add_subdirectory(Files)
 endif()
