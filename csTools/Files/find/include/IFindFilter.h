@@ -29,8 +29,7 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef IFINDFILTER_H
-#define IFINDFILTER_H
+#pragma once
 
 #include <memory>
 
@@ -56,5 +55,3 @@ private:
 
   bool _reject{false};
 };
-
-#endif // IFINDFILTER_H

@@ -15,7 +15,7 @@ set(ENABLE_QT       ON CACHE BOOL "" FORCE)
 set(ENABLE_QTIMPORT ON CACHE BOOL "" FORCE)
 
 add_subdirectory(${csTools_SOURCE_DIR}/../3rdparty/csUtil/csUtil
-  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/csUtil
+  ${csTools_BINARY_DIR}/3rdparty/csUtil
 )
 
 if(ENABLE_QT)

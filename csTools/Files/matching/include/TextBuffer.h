@@ -29,8 +29,7 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef TEXTBUFFER_H
-#define TEXTBUFFER_H
+#pragma once
 
 #include <cstddef>
 
@@ -81,5 +80,3 @@ private:
   QIODevice    *_device{nullptr};
   TextInfo      _info{};
 };
-
-#endif // TEXTBUFFER_H

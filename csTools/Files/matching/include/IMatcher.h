@@ -29,17 +29,14 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef IMATCHER_H
-#define IMATCHER_H
-
-#include <cstdint>
+#pragma once
 
 #include <list>
 #include <memory>
 #include <string>
 #include <utility>
 
-#include <csUtil/csFlags.h>
+#include <cs/Core/Flags.h>
 
 #include "TextInfo.h"
 
@@ -53,7 +50,7 @@ enum class MatchFlag : unsigned {
 
 CS_ENABLE_FLAGS(MatchFlag);
 
-using MatchFlags = csFlags<MatchFlag>;
+using MatchFlags = cs::Flags<MatchFlag>;
 
 using Match     = std::pair<int,int>;
 using MatchList = std::list<Match>;
@@ -105,5 +102,3 @@ private:
 IMatcherPtr createDefaultMatcher();
 
 IMatcherPtr createPcre2Matcher();
-
-#endif // IMATCHER_H

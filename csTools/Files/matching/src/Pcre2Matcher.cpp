@@ -29,7 +29,8 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include <csUtil/csStringUtil.h>
+#include <cs/Core/CharUtil.h>
+#include <cs/Text/StringUtil.h>
 
 #include "Pcre2Matcher.h"
 
@@ -97,7 +98,7 @@ std::string Pcre2Matcher::error() const
   }
   std::string str;
   try {
-    str.resize(kErrorLength, cs::glyph<std::string::value_type>::null);
+    str.resize(kErrorLength, cs::glyph<std::string::value_type>::NUL);
     pcre2_get_error_message_8(_errcode, reinterpret_cast<PCRE2_UCHAR8*>(str.data()), str.size());
     cs::shrink(str);
   } catch(...) {
@@ -185,7 +186,7 @@ bool Pcre2Matcher::impl_match(const char *first, const char *last)
     storeMatch();
   }
 
-  if( flags().testFlag(MatchFlag::FindAll) ) {
+  if( flags().testAny(MatchFlag::FindAll) ) {
     return nextMatches(first, length);
   }
 
@@ -236,13 +237,13 @@ void Pcre2Matcher::clear(const bool all)
 uint32_t Pcre2Matcher::compileOptions() const
 {
   uint32_t options = 0;
-  if( flags().testFlag(MatchFlag::CaseInsensitive) ) {
+  if( flags().testAny(MatchFlag::CaseInsensitive) ) {
     options |= PCRE2_CASELESS;
   }
-  if( !flags().testFlag(MatchFlag::RegExp) ) {
+  if( !flags().testAny(MatchFlag::RegExp) ) {
     options |= PCRE2_LITERAL;
   }
-  if( flags().testFlag(MatchFlag::Utf8) ) {
+  if( flags().testAny(MatchFlag::Utf8) ) {
     options |= PCRE2_UTF | PCRE2_UCP;
   }
   return options;

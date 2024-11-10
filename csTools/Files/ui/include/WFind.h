@@ -29,8 +29,7 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef WFIND_H
-#define WFIND_H
+#pragma once
 
 #include "ITabWidget.h"
 
@@ -59,5 +58,3 @@ private:
   QAction *_completeSuffixAction{nullptr};
   class FilesModel *_resultsModel{nullptr};
 };
-
-#endif // WFIND_H

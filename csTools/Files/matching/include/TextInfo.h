@@ -29,8 +29,7 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef TEXTINFO_H
-#define TEXTINFO_H
+#pragma once
 
 #include "TextUtil.h"
 
@@ -58,5 +57,3 @@ private:
   bool      _binary{false};
   EndOfLine _eol{EndOfLine::Unknown};
 };
-
-#endif // TEXTINFO_H

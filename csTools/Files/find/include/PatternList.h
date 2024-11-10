@@ -29,13 +29,10 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef PATTERNLIST_H
-#define PATTERNLIST_H
+#pragma once
 
 #include <QtCore/QStringList>
 
 QString cleanPatternList(const QString& s);
 
 QStringList preparePatternList(QString s);
-
-#endif // PATTERNLIST_H

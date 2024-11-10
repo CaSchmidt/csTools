@@ -29,8 +29,7 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef WMAINWINDOW_H
-#define WMAINWINDOW_H
+#pragma once
 
 #include <QtWidgets/QMainWindow>
 
@@ -62,5 +61,3 @@ private:
 
   Ui::WMainWindow *ui{nullptr};
 };
-
-#endif // WMAINWINDOW_H

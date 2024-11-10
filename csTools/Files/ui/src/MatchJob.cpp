@@ -31,7 +31,7 @@
 
 #include <QtCore/QFile>
 
-#include <csUtil/csILogger.h>
+#include <cs/Core/QStringUtil.h>
 
 #include "IMatcher.h"
 #include "TextBuffer.h"
@@ -48,7 +48,7 @@ namespace priv {
       return;
     }
     const QString s = QStringLiteral("%1: %2").arg(job.filename).arg(text);
-    job.logger->logText(s.toStdString());
+    job.logger->logText(cs::toUtf8String(s));
   }
 
   void printWarning(const MatchJob& job, const QString& warning)
@@ -57,7 +57,7 @@ namespace priv {
       return;
     }
     const QString s = QStringLiteral("%1: %2").arg(job.filename).arg(warning);
-    job.logger->logWarning(s.toStdString());
+    job.logger->logWarning(cs::toUtf8String(s));
   }
 
   void printError(const MatchJob& job, const QString& error)
@@ -66,7 +66,7 @@ namespace priv {
       return;
     }
     const QString s = QStringLiteral("%1: %2").arg(job.filename).arg(error);
-    job.logger->logError(s.toStdString());
+    job.logger->logError(cs::toUtf8String(s));
   }
 
   void printError(const MatchJob& job, const int lineno, const QString& error)
@@ -75,7 +75,7 @@ namespace priv {
       return;
     }
     const QString s = QStringLiteral("%1:%2: %3").arg(job.filename).arg(lineno).arg(error);
-    job.logger->logError(s.toStdString());
+    job.logger->logError(cs::toUtf8String(s));
   }
 
 } // namespace priv

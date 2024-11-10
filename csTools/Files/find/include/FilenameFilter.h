@@ -29,8 +29,7 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef FILENAMEFILTER_H
-#define FILENAMEFILTER_H
+#pragma once
 
 #include <QtCore/QRegExp>
 
@@ -53,5 +52,3 @@ private:
   QString _pattern;
   QRegExp _regexp;
 };
-
-#endif // FILENAMEFILTER_H

@@ -29,8 +29,7 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef FILESMODEL_H
-#define FILESMODEL_H
+#pragma once
 
 #include <QtCore/QAbstractListModel>
 #include <QtCore/QDir>
@@ -67,5 +66,3 @@ private:
   QDir _root;
   QString _rootPath;
 };
-
-#endif // FILESMODEL_H

@@ -35,8 +35,8 @@
 
 ////// MatchResultsItem - public /////////////////////////////////////////////
 
-MatchResultsItem::MatchResultsItem(csAbstractTreeItem *parent)
-  : csAbstractTreeItem(parent)
+MatchResultsItem::MatchResultsItem(cs::AbstractTreeItem *parent)
+  : cs::AbstractTreeItem(parent)
 {
 }
 
@@ -77,7 +77,7 @@ QStringList MatchResultsRoot::files() const
 {
   QStringList result;
   for(int i = 0; i < rowCount(); i++) {
-    csAbstractTreeItem *item = childItem(i);
+    cs::AbstractTreeItem *item = childItem(i);
     MatchResultsFile   *file = dynamic_cast<MatchResultsFile*>(item);
     if( file == nullptr ) {
       continue;

@@ -35,9 +35,9 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
 
-#include <csQt/csTreeModel.h>
-#include <csQt/csQtUtil.h>
-#include <csUtil/csWProgressLogger.h>
+#include <cs/Logging/WProgressLogger.h>
+#include <cs/Qt/Clipboard.h>
+#include <cs/Qt/Widget.h>
 
 #include "MatchResultsModel.h"
 #include "ResultsProxyDelegate.h"
@@ -50,7 +50,7 @@
 
 namespace priv {
 
-  MatchJob makeJob(const QString& filename, const csILogger *logger, const IMatcherPtr& matcher)
+  MatchJob makeJob(const QString& filename, cs::LoggerPtr logger, const IMatcherPtr& matcher)
   {
     MatchJob job{filename};
 
@@ -70,7 +70,7 @@ namespace priv {
       return Location{nullptr, nullptr};
     }
 
-    const csAbstractTreeItem *item = csTreeItem(index);
+    const cs::AbstractTreeItem *item = cs::treeItem(index);
 
     const MatchResultsLine *line = dynamic_cast<const MatchResultsLine*>(item);
     const MatchResultsFile *file = line != nullptr
@@ -170,7 +170,7 @@ WGrep::WGrep(QWidget *parent, Qt::WindowFlags f)
 
   // Results Model ///////////////////////////////////////////////////////////
 
-  _resultsModel = new csTreeModel(new MatchResultsRoot(QString()), this);
+  _resultsModel = new cs::TreeModel(new MatchResultsRoot(QString()), this);
   ui->resultsView->setModel(_resultsModel);
 
   // Signals & Slots /////////////////////////////////////////////////////////
@@ -229,7 +229,7 @@ void WGrep::copyLine(const QModelIndex& index)
       ? QStringLiteral("%1:%2").arg(filename).arg(line->number())
       : filename;
 
-  csSetClipboardText(text);
+  cs::setClipboardText(text);
 }
 
 void WGrep::editFile(const QModelIndex& index)
@@ -256,7 +256,7 @@ void WGrep::executeGrep()
 
   IMatcherPtr matcher = priv::makeMatcher(ui);
 
-  csWProgressLogger dialog(this);
+  cs::WProgressLogger dialog(this);
   dialog.setWindowTitle(tr("Executing grep..."));
 
   MatchJobs jobs;
@@ -311,7 +311,7 @@ void WGrep::showContextMenu(const QPoint& p)
   menu.addSeparator();
   QAction *clearAction = menu.addAction(tr("Clear results"));
 
-  QAction *choice = menu.exec(csMapToGlobal(ui->resultsView, p));
+  QAction *choice = menu.exec(cs::mapToGlobal(ui->resultsView, p));
   if(        choice == nullptr ) {
     return;
 

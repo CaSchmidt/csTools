@@ -29,12 +29,12 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef WGREP_H
-#define WGREP_H
+#pragma once
+
+#include <cs/Qt/TreeModel.h>
 
 #include "ITabWidget.h"
 
-class csTreeModel;
 class QDir;
 
 namespace Ui {
@@ -67,7 +67,5 @@ private:
   bool tryCompile();
 
   Ui::WGrep *ui{nullptr};
-  csTreeModel *_resultsModel{nullptr};
+  cs::TreeModel *_resultsModel{nullptr};
 };
-
-#endif // WGREP_H

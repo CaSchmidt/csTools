@@ -29,8 +29,7 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef PATHFILTER_H
-#define PATHFILTER_H
+#pragma once
 
 #include <QtCore/QStringList>
 
@@ -52,5 +51,3 @@ private:
 
   QStringList _paths;
 };
-
-#endif // PATHFILTER_H

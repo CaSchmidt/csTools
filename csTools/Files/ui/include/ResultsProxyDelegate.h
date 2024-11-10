@@ -29,8 +29,7 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef RESULTSPROXYDELEGATE_H
-#define RESULTSPROXYDELEGATE_H
+#pragma once
 
 #include <QtWidgets/QAbstractItemDelegate>
 
@@ -54,5 +53,3 @@ private:
   QAbstractItemDelegate *_delegate;
   QtCreator::HighlightingItemDelegate *_highlight;
 };
-
-#endif // RESULTSPROXYDELEGATE_H

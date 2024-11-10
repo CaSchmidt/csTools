@@ -29,8 +29,7 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef PCRE2MATCHER_H
-#define PCRE2MATCHER_H
+#pragma once
 
 #include <pcre2.h>
 
@@ -85,5 +84,3 @@ private:
   pcre2_code_8 *_regexp{nullptr};
   PCRE2_SIZE *_ovector{nullptr};
 };
-
-#endif // PCRE2MATCHER_H

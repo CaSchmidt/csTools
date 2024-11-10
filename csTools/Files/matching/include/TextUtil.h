@@ -29,12 +29,9 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef TEXTUTIL_H
-#define TEXTUTIL_H
+#pragma once
 
 #include "FileCache.h"
 
 using TextFileCache = FileCache<char>;
 using TextLine      = CacheView<char>;
-
-#endif // TEXTUTIL_H

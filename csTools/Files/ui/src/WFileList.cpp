@@ -34,7 +34,7 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QPushButton>
 
-#include <csQt/csQtUtil.h>
+#include <cs/Qt/Clipboard.h>
 
 #include "WFileList.h"
 
@@ -43,7 +43,7 @@
 ////// public ////////////////////////////////////////////////////////////////
 
 WFileList::WFileList(QWidget *parent, Qt::WindowFlags f)
-  : csWListEditor(parent, f)
+  : cs::WListEditor(parent, f)
 {
   // User Interface //////////////////////////////////////////////////////////
 
@@ -166,7 +166,7 @@ void WFileList::copyList()
     return;
   }
   qSort(files);
-  csSetClipboardText(files);
+  cs::setClipboardText(files);
 }
 
 ////// private ///////////////////////////////////////////////////////////////

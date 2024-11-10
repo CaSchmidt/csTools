@@ -31,7 +31,7 @@
 
 #include <QtWidgets/QAbstractItemView>
 
-#include <csQt/csQtUtil.h>
+#include <cs/Qt/ItemModel.h>
 #include <QtCreator/HighlightingItemDelegate.h>
 
 #include "ResultsProxyDelegate.h"
@@ -58,7 +58,7 @@ ResultsProxyDelegate::~ResultsProxyDelegate()
 
 void ResultsProxyDelegate::paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-  if( csIndexDepth(index) == kIndexDepth ) {
+  if( cs::indexDepth(index) == kIndexDepth ) {
     _highlight->paint(painter, option, index);
   } else {
     _delegate->paint(painter, option, index);
@@ -67,7 +67,7 @@ void ResultsProxyDelegate::paint(QPainter *painter, const QStyleOptionViewItem& 
 
 QSize ResultsProxyDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-  if( csIndexDepth(index) == kIndexDepth ) {
+  if( cs::indexDepth(index) == kIndexDepth ) {
     return _highlight->sizeHint(option, index);
   }
   return _delegate->sizeHint(option, index);

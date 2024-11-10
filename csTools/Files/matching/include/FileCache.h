@@ -29,8 +29,7 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef FILECACHE_H
-#define FILECACHE_H
+#pragma once
 
 #include <algorithm>
 #include <utility>
@@ -226,5 +225,3 @@ private:
   // Buffer Offset
   size_type _cur{0};
 };
-
-#endif // FILECACHE_H

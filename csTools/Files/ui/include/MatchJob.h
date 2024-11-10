@@ -29,16 +29,15 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef MATCHJOB_H
-#define MATCHJOB_H
+#pragma once
 
 #include <QtCore/QList>
 #include <QtCore/QString>
 #include <QtCore/QVector>
 
-#include "IMatcher.h"
+#include <cs/Logging/AbstractLogger.h>
 
-class csILogger;
+#include "IMatcher.h"
 
 ////// MatchJob //////////////////////////////////////////////////////////////
 
@@ -48,7 +47,7 @@ struct MatchJob {
   MatchJob(const QString& _filename) noexcept;
 
   QString filename{};
-  const csILogger *logger{nullptr};
+  cs::LoggerPtr logger;
   IMatcherPtr matcher{};
 };
 
@@ -90,5 +89,3 @@ using MatchResults = QList<MatchResult>;
 ////// Functions /////////////////////////////////////////////////////////////
 
 MatchResult executeJob(const MatchJob& job);
-
-#endif // MATCHJOB_H

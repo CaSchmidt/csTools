@@ -29,8 +29,7 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#pragma once
 
 #include <QStringList>
 
@@ -78,5 +77,3 @@ namespace Settings {
   void save();
 
 } // namespace Settings
-
-#endif // SETTINGS_H

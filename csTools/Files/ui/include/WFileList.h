@@ -29,14 +29,13 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef WFILELIST_H
-#define WFILELIST_H
+#pragma once
 
-#include <csQt/csWListEditor.h>
+#include <cs/Qt/WListEditor.h>
 
 class QDir;
 
-class WFileList : public csWListEditor {
+class WFileList : public cs::WListEditor {
   Q_OBJECT
   Q_PROPERTY(bool autoCurrentDir
              READ autoCurrentDir
@@ -103,5 +102,3 @@ signals:
   void listFilesOnlyChanged(bool);
   void selectionFilterChanged(const QString&);
 };
-
-#endif // WFILELIST_H

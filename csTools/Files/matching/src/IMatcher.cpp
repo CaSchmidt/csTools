@@ -29,7 +29,7 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include <csUtil/csStringUtil.h>
+#include <cs/Core/Range.h>
 
 #include "IMatcher.h"
 
@@ -55,7 +55,7 @@ void IMatcher::setFlags(const MatchFlags f)
 
 bool IMatcher::match(const char *str)
 {
-  return impl_match(str, str + cs::length(str));
+  return impl_match(str, str + cs::strlen(str));
 }
 
 bool IMatcher::match(const char *str, const std::size_t len)

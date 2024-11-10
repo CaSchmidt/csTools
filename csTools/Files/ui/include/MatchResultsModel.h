@@ -29,18 +29,17 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef MATCHRESULTSMODEL_H
-#define MATCHRESULTSMODEL_H
+#pragma once
 
 #include <QtCore/QDir>
 
-#include <csQt/csAbstractTreeItem.h>
+#include <cs/Qt/AbstractTreeItem.h>
 
 #include "MatchJob.h"
 
-class MatchResultsItem : public csAbstractTreeItem {
+class MatchResultsItem : public cs::AbstractTreeItem {
 public:
-  MatchResultsItem(csAbstractTreeItem *parent = nullptr);
+  MatchResultsItem(cs::AbstractTreeItem *parent = nullptr);
   ~MatchResultsItem() = default;
 
   int columnCount() const;
@@ -89,5 +88,3 @@ public:
 private:
   MatchedLine _line;
 };
-
-#endif // MATCHRESULTSMODEL_H

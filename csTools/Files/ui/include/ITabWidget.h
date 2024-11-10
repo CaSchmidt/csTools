@@ -29,8 +29,7 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef ITABWIDGET_H
-#define ITABWIDGET_H
+#pragma once
 
 #include <QtWidgets/QWidget>
 
@@ -51,5 +50,3 @@ signals:
   void openLocationRequested(const QString& path);
   void tabLabelChanged(const QString&);
 };
-
-#endif // ITABWIDGET_H

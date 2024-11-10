@@ -4,7 +4,7 @@ list(APPEND ui_FORMS
   forms/WFind.ui
   forms/WGrep.ui
   forms/WMainWindow.ui
-  )
+)
 
 list(APPEND ui_HEADERS
   include/FilesModel.h
@@ -17,7 +17,7 @@ list(APPEND ui_HEADERS
   include/WFind.h
   include/WGrep.h
   include/WMainWindow.h
-  )
+)
 
 list(APPEND ui_SOURCES
   src/FilesModel.cpp
@@ -31,7 +31,7 @@ list(APPEND ui_SOURCES
   src/WGrep.cpp
   src/WMainWindow.cpp
   src/main.cpp
-  )
+)
 
 ### Target ###################################################################
 
@@ -39,7 +39,7 @@ add_executable(ui
   ${ui_FORMS}
   ${ui_HEADERS}
   ${ui_SOURCES}
-  )
+)
 
 format_output_name(ui "csFiles")
 
@@ -48,22 +48,22 @@ set_target_properties(ui PROPERTIES
   AUTORCC ON
   AUTOUIC ON
   AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/forms
-  CXX_STANDARD 17
+  CXX_STANDARD 23
   CXX_STANDARD_REQUIRED ON
-  )
+)
 
 if(WIN32)
   set_target_properties(ui PROPERTIES
     WIN32_EXECUTABLE ON
-    )
+  )
 endif()
 
 target_compile_definitions(ui
   PRIVATE -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII
-  )
+)
 
 target_include_directories(ui PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/include
-  )
+)
 
-target_link_libraries(ui find matching csQt Qt5::Concurrent Qt5::Widgets)
+target_link_libraries(ui find matching csUtil Qt5::Concurrent Qt5::Widgets)

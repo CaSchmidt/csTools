@@ -29,8 +29,7 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#ifndef EXTENSIONFILTER_H
-#define EXTENSIONFILTER_H
+#pragma once
 
 #include <QtCore/QStringList>
 
@@ -54,5 +53,3 @@ private:
   bool _complete{false};
   QStringList _extensions;
 };
-
-#endif // EXTENSIONFILTER_H

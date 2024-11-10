@@ -7,7 +7,7 @@ set(PCRE2_BUILD_TESTS     OFF CACHE BOOL "" FORCE)
 set(PCRE2_BUILD_PCRE2GREP OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(${csTools_SOURCE_DIR}/../3rdparty/pcre2-10.35
-  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/pcre2
+  ${csTools_BINARY_DIR}/3rdparty/pcre2
 )
 
 ### Subdirectories ###########################################################
