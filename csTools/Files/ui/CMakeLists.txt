@@ -1,12 +1,12 @@
 ### Project ##################################################################
 
-list(APPEND ui_FORMS
+list(APPEND Files_FORMS
   forms/WFind.ui
   forms/WGrep.ui
   forms/WMainWindow.ui
 )
 
-list(APPEND ui_HEADERS
+list(APPEND Files_HEADERS
   include/FilesModel.h
   include/ITabWidget.h
   include/MatchJob.h
@@ -19,7 +19,7 @@ list(APPEND ui_HEADERS
   include/WMainWindow.h
 )
 
-list(APPEND ui_SOURCES
+list(APPEND Files_SOURCES
   src/FilesModel.cpp
   src/ITabWidget.cpp
   src/MatchJob.cpp
@@ -35,15 +35,15 @@ list(APPEND ui_SOURCES
 
 ### Target ###################################################################
 
-add_executable(ui
-  ${ui_FORMS}
-  ${ui_HEADERS}
-  ${ui_SOURCES}
+add_executable(Files
+  ${Files_FORMS}
+  ${Files_HEADERS}
+  ${Files_SOURCES}
 )
 
-format_output_name(ui "csFiles")
+format_output_name(Files "csFiles")
 
-set_target_properties(ui PROPERTIES
+set_target_properties(Files PROPERTIES
   AUTOMOC ON
   AUTORCC ON
   AUTOUIC ON
@@ -53,17 +53,17 @@ set_target_properties(ui PROPERTIES
 )
 
 if(WIN32)
-  set_target_properties(ui PROPERTIES
+  set_target_properties(Files PROPERTIES
     WIN32_EXECUTABLE ON
   )
 endif()
 
-target_compile_definitions(ui
+target_compile_definitions(Files
   PRIVATE -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII
 )
 
-target_include_directories(ui PRIVATE
+target_include_directories(Files PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-target_link_libraries(ui find matching csUtil Qt5::Concurrent Qt5::Widgets)
+target_link_libraries(Files find matching csUtil Qt5::Concurrent Qt5::Widgets)
