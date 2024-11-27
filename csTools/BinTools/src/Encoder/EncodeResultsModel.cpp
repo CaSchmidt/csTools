@@ -127,7 +127,7 @@ bool EncodeResultsModel::addResult(const EnginePtr& engine, const Store& store, 
   const cs::Buffer valBuffer = is_msb
       ? cs::toBytesBE(value, engine->numBits()/8)
       : cs::toBytesLE(value, engine->numBits()/8);
-  const std::string valString = cs::toString(valBuffer, ' ', true);
+  const std::string valString = cs::toHexString(valBuffer, ' ', true).value();
 
   const QString  first = cs::toQString(cs::toUtf8String(engine->text()));
   const QString second = cs::toQString(cs::toUtf8String(valString));

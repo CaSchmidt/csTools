@@ -29,30 +29,27 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include <cstdio>
 #include <cstdlib>
 
+#include <algorithm>
+#include <iostream>
+#include <print>
+
 #include <cs/Logging/Logger.h>
-#include <cs/Text/PrintFormat.h>
-#include <cs/Text/PrintUtil.h>
 #include <cs/Text/TextIO.h>
 
 #include <Calculate/Parser.h>
 
-void print(const std::string& text)
-{
-  for(std::size_t i = 0; i < text.size(); i++) {
-    cs::print(" 0x%", cs::hexf(uint8_t(text[i])));
-  }
-  cs::println("");
-}
-
 template<typename T>
 void print(const std::unordered_map<std::string,T>& variables)
 {
-  for(const auto& var : variables) {
-    cs::println("% = % (0x%)", var.first, var.second, cs::hexf(var.second));
-  }
+  using value_type = typename std::unordered_map<std::string,T>::value_type;
+
+  auto print = [](const value_type& var) -> void {
+    std::println("{} = {} (0x{:X})", var.first, var.second, var.second);
+  };
+
+  std::for_each(variables.begin(), variables.end(), print);
 }
 
 int main(int /*argc*/, char ** /*argv*/)
@@ -61,7 +58,7 @@ int main(int /*argc*/, char ** /*argv*/)
 
   Parser parser;
 
-  cs::print("input> ");
+  std::print("input> ");
 
   const std::string input = cs::readStream(std::cin);
 

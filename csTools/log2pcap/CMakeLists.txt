@@ -9,6 +9,12 @@ list(APPEND log2pcap_SOURCES
   src/main_log2pcap.cpp
 )
 
+### Test Data ################################################################
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/examples/candump-2024-09-01_173152.log
+  DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/testdata
+)
+
 ### Target ###################################################################
 
 add_executable(log2pcap)

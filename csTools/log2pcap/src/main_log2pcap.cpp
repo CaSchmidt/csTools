@@ -34,6 +34,7 @@
 
 #include <algorithm>
 #include <iterator>
+#include <print>
 #include <string>
 
 #include <cs/Core/ByteArray.h>
@@ -44,8 +45,6 @@
 #include <cs/System/FileSystem.h>
 #include <cs/System/PathFormatter.h>
 #include <cs/System/Time.h>
-#include <cs/Text/PrintFormat.h>
-#include <cs/Text/PrintUtil.h>
 #include <cs/Text/StringUtil.h>
 #include <cs/Text/StringValue.h>
 #include <cs/Text/TextIO.h>
@@ -189,10 +188,10 @@ namespace parser {
       return false;
     }
 
-    bool ok = false;
     const std::string_view idStr(begId, endId);
-    result.id = cs::toValue<canid_t>(idStr, &ok, 16);
-    if( !ok ) {
+    const auto expVal = cs::toValue<canid_t>(idStr, 16);
+    result.id = expVal.value_or(0);
+    if( !expVal.has_value() ) {
       logger->logError(lineno, u8"Invalid ID string \"{}\"!", idStr);
       return false;
     }
@@ -227,7 +226,7 @@ namespace parser {
     return true;
   }
 
-  cs::TimeVal parseTime(const std::string_view& str)
+  std::expected<cs::TimeVal,std::errc> parseTime(const std::string_view& str)
   {
     namespace chr = std::chrono;
 
@@ -239,26 +238,23 @@ namespace parser {
     constexpr size_type NPOS = std::string_view::npos;
     constexpr size_type  ONE = 1;
 
-    const cs::TimeVal ERROR_VAL(-1);
-
     const size_type idxDot = str.find('.');
     if( idxDot == NPOS ) {
-      return ERROR_VAL;
+      return std::unexpected(std::errc::invalid_argument);
     }
 
-    bool ok = false;
-
-    const chr::seconds secs{cs::toValue<seconds_t>(str.substr(0, idxDot), &ok)};
-    if( !ok ) {
-      return ERROR_VAL;
+    const auto expSecs = cs::toValue<seconds_t>(str.substr(0, idxDot));
+    if( !expSecs.has_value() ) {
+      return std::unexpected(expSecs.error());
     }
 
-    const chr::microseconds usecs{cs::toValue<microseconds_t>(str.substr(idxDot + ONE), &ok)};
-    if( !ok ) {
-      return ERROR_VAL;
+    const auto expUSecs = cs::toValue<microseconds_t>(str.substr(idxDot + ONE));
+    if( !expUSecs.has_value() ) {
+      return std::unexpected(expUSecs.error());
     }
 
-    return cs::TimeVal(secs, usecs);
+    return cs::TimeVal(chr::seconds{expSecs.value()},
+                       chr::microseconds{expUSecs.value()});
   }
 
   bool parseTime(cs::TimeVal& result, ConstStringIter& first, const ConstStringIter& last,
@@ -280,7 +276,7 @@ namespace parser {
     }
 
     const std::string_view timeStr(first, endTim);
-    result = parseTime(timeStr);
+    result = parseTime(timeStr).value_or(cs::TimeVal(-1));
     if( !result.isValid() ) {
       logger->logError(lineno, u8"Invalid time stamp \"{}\"!", timeStr);
       return false;
@@ -553,33 +549,39 @@ inline fs::path replaceExtension(fs::path p, const fs::path& ext)
 }
 
 void print(const LineInfo& info)
-{
-  cs::print("(%.%) % %#",
-            info.time.secs().count(), info.time.usecs().count(),
-            info.device, cs::hexf(info.id, info.is_ext));
+{  
+  std::print("({}.{}) ", info.time.secs().count(), info.time.usecs().count());
+
+  std::print("{} ", info.device);
+
+  if( info.is_ext ) {
+    std::print("{:08X}#", info.id);
+  } else {
+    std::print("{:X}#", info.id);
+  }
 
   if( info.is_canfd ) {
-    cs::print("#%", cs::toHexChar<char,true>(info.fdflags));
+    std::print("#{:X}", info.fdflags);
   }
 
   if( info.is_rtr ) {
-    cs::print("R%", cs::toHexChar<char,true>(info.len));
+    std::print("R{:X}", info.len);
   } else {
     for(uint8_t i = 0; i < info.len; i++) {
-      cs::print("%", cs::hexf(info.data[i], true));
+      std::print("{:02X}", info.data[i]);
     }
   }
 
   if( info.isLen8Dlc() ) {
-    cs::print("_%", cs::toHexChar<char,true>(info.len8_dlc));
+    std::print("_{:X}", info.len8_dlc);
   }
 
-  cs::println("");
+  std::println("");
 }
 
 void printno(const std::size_t lineno, const LineInfo& info)
 {
-  cs::print("%: ", lineno);
+  std::print("{}: ", lineno);
   print(info);
 }
 
@@ -587,7 +589,7 @@ int main(int /*argc*/, char **argv)
 {
   cs::LoggerPtr logger = cs::Logger::make();
 
-  const fs::path input = cs::reparent(argv[0], "test_a.log");
+  const fs::path input = "./testdata/candump-2024-09-01_173152.log";
   if( !cs::isFile(input) ) {
     logger->logError(u8"Input \"{}\" not found!", input);
     return EXIT_FAILURE;
@@ -595,10 +597,10 @@ int main(int /*argc*/, char **argv)
 
   const chr::system_clock::time_point inputTime = cs::lastWriteTime(input);
   const cs::TimeVal inputTimeVal(inputTime);
-  cs::println("%.% %", inputTimeVal.secs(), inputTimeVal.usecs(), inputTimeVal.value());
+  std::println("{}.{} {}", inputTimeVal.secs(), inputTimeVal.usecs(), inputTimeVal.value());
 
   const fs::path output = replaceExtension(input, "pcap");
-  cs::println("% -> %", input, output);
+  std::println("{} -> {}", input, output);
 
   const std::list<std::string> lines = cs::readLines(input);
   if( lines.empty() ) {

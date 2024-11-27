@@ -29,16 +29,14 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include <cstdio>
 #include <cstdlib>
-#include <cstddef>
 
 #include <algorithm>
 #include <charconv>
+#include <iostream>
+#include <print>
 
 #include <cs/Logging/Logger.h>
-#include <cs/Text/PrintFormat.h>
-#include <cs/Text/PrintUtil.h>
 
 #include "Encode/Parser.h"
 
@@ -61,7 +59,7 @@ void inputVariables(Encode::VariableStore<T>& store)
   using citer_t = typename Encode::VariableStore<T>::const_iterator;
 
   for(citer_t it = store.cbegin(); it != store.cend(); ++it) {
-    cs::print("% (== 0x%) := ", it->first, cs::hexf(it->second));
+    std::print("{} (== 0x{:X}) := ", it->first, it->second);
 
     std::string input;
     std::cin >> input;
@@ -92,14 +90,14 @@ void test_engine(const Encode::EnginePtr<uint32_t>& engine)
 
   Store store;
   const size_type count = engine->initialize(store);
-  cs::println("Number of Variables = %", count);
+  std::println("Number of Variables = {}", count);
 
   inputVariables(store);
 
   const value_type value = engine->compose(store);
-  cs::println("%: 0x%", engine->text(), cs::hexf(value, true));
+  std::println("{0}: 0x{1:0{2}X}", engine->text(), value, sizeof(value_type)*2);
 
-  cs::println("");
+  std::println();
 }
 
 void test_encode32()
@@ -138,8 +136,8 @@ void test_parser()
 
 void display_note()
 {
-  cs::println("Enter a == 0xABCD and b == 0x3C0.");
-  cs::println("");
+  std::println("Enter a == 0xABCD and b == 0x3C0.");
+  std::println("");
 }
 
 ////// Main //////////////////////////////////////////////////////////////////
