@@ -105,11 +105,11 @@ namespace Calculate {
       _lexer.addScanner(cs::CIdentifierScanner::make(TOK_Identifier));
       _lexer.addScanner(cs::CIntegralScanner<value_type>::make(TOK_Integral, true));
 
-      auto keys = cs::KeyWordScanner::make();
-      cs::derived_cast<cs::KeyWordScanner>(keys)->addWord({TOK_ShiftRightArithmetic, ">>>"});
-      cs::derived_cast<cs::KeyWordScanner>(keys)->addWord({TOK_ShiftLeft, "<<"});
-      cs::derived_cast<cs::KeyWordScanner>(keys)->addWord({TOK_ShiftRight, ">>"});
-      _lexer.addScanner(std::move(keys));
+      auto sequences = cs::CharSequenceScanner::make();
+      cs::derived_cast<cs::CharSequenceScanner>(sequences)->addWord({TOK_ShiftRightArithmetic, ">>>"});
+      cs::derived_cast<cs::CharSequenceScanner>(sequences)->addWord({TOK_ShiftLeft, "<<"});
+      cs::derived_cast<cs::CharSequenceScanner>(sequences)->addWord({TOK_ShiftRight, ">>"});
+      _lexer.addScanner(std::move(sequences));
 
       _lexer.setFlags(cs::LexerFlag::ScanLF);
 
