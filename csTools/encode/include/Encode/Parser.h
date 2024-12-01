@@ -31,8 +31,9 @@
 
 #pragma once
 
-#include <cs/Lexer/Context.h>
 #include <cs/Lexer/AbstractParser.h>
+#include <cs/Lexer/Scanners.h>
+#include <cs/Lexer/TokenUtil.h>
 
 #include <Encode/Engine.h>
 
@@ -61,7 +62,7 @@ namespace Encode {
   };
 
   template<typename T>
-  class Parser : public cs::AbstractParser<char> {
+  class Parser : public cs::AbstractParser {
   public:
     using EnginePtr = Encode::EnginePtr<T>;
     using Engine    = typename EnginePtr::element_type;
@@ -79,12 +80,10 @@ namespace Encode {
   protected:
     bool initialize()
     {
-      using ctx = cs::LexerContext<char_type>;
-
-      _lexer.addScanner(ctx::CharLiteralScanner::make("(),={}[]:@"));
-      _lexer.addScanner(ctx::CIdentifierScanner::make(TOK_Identifier));
-      _lexer.addScanner(ctx::CIntegralScanner<value_type>::make(TOK_Integral, true));
-      _lexer.addScanner(ctx::CStringScanner::make(TOK_String));
+      _lexer.addScanner(cs::CharLiteralScanner::make("(),={}[]:@"));
+      _lexer.addScanner(cs::CIdentifierScanner::make(TOK_Identifier));
+      _lexer.addScanner(cs::CIntegralScanner<value_type>::make(TOK_Integral, true));
+      _lexer.addScanner(cs::CStringScanner::make(TOK_String));
 
       _lexer.setFlags(cs::LexerFlag::ScanLF);
 

@@ -34,8 +34,9 @@
 #include <list>
 #include <unordered_map>
 
-#include <cs/Lexer/Context.h>
 #include <cs/Lexer/AbstractParser.h>
+#include <cs/Lexer/Scanners.h>
+#include <cs/Lexer/TokenUtil.h>
 #include <cs/Text/StringUtil.h>
 
 namespace Calculate {
@@ -66,7 +67,7 @@ namespace Calculate {
 
   template<typename T>
   requires std::is_unsigned_v<T>
-  class Parser : public cs::AbstractParser<char> {
+  class Parser : public cs::AbstractParser {
   public:
     using value_type = T;
 
@@ -100,16 +101,14 @@ namespace Calculate {
   protected:
     bool initialize()
     {
-      using ctx = cs::LexerContext<char>;
+      _lexer.addScanner(cs::CharLiteralScanner::make("+-.*/%()~&^|="));
+      _lexer.addScanner(cs::CIdentifierScanner::make(TOK_Identifier));
+      _lexer.addScanner(cs::CIntegralScanner<value_type>::make(TOK_Integral, true));
 
-      _lexer.addScanner(ctx::CharLiteralScanner::make("+-.*/%()~&^|="));
-      _lexer.addScanner(ctx::CIdentifierScanner::make(TOK_Identifier));
-      _lexer.addScanner(ctx::CIntegralScanner<value_type>::make(TOK_Integral, true));
-
-      auto keys = ctx::KeyWordScanner::make();
-      cs::derived_cast<ctx::KeyWordScanner>(keys)->addWord({TOK_ShiftRightArithmetic, ">>>"});
-      cs::derived_cast<ctx::KeyWordScanner>(keys)->addWord({TOK_ShiftLeft, "<<"});
-      cs::derived_cast<ctx::KeyWordScanner>(keys)->addWord({TOK_ShiftRight, ">>"});
+      auto keys = cs::KeyWordScanner::make();
+      cs::derived_cast<cs::KeyWordScanner>(keys)->addWord({TOK_ShiftRightArithmetic, ">>>"});
+      cs::derived_cast<cs::KeyWordScanner>(keys)->addWord({TOK_ShiftLeft, "<<"});
+      cs::derived_cast<cs::KeyWordScanner>(keys)->addWord({TOK_ShiftRight, ">>"});
       _lexer.addScanner(std::move(keys));
 
       _lexer.setFlags(cs::LexerFlag::ScanLF);
