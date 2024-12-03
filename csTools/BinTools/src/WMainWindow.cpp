@@ -38,6 +38,7 @@
 #include "WMainWindow.h"
 #include "ui_WMainWindow.h"
 
+#include "Calculator/WCalculatorPage.h"
 #include "Encoder/WEncoderPage.h"
 #include "global.h"
 #include "XML_io.h"
@@ -65,6 +66,8 @@ WMainWindow::WMainWindow(QWidget *parent, const Qt::WindowFlags flags)
   connect(ui->quitAction, &QAction::triggered,
           this, &WMainWindow::close);
 
+  connect(ui->newCalculatorAction, &QAction::triggered,
+          this, &WMainWindow::newCalculatorTab);
   connect(ui->newEncoderAction, &QAction::triggered,
           this, &WMainWindow::newEncoderTab);
   connect(ui->closeTabAction, &QAction::triggered,
@@ -95,6 +98,11 @@ void WMainWindow::closeAllTabs()
 void WMainWindow::closeCurrentTab()
 {
   removeTab(ui->tabWidget->currentIndex());
+}
+
+void WMainWindow::newCalculatorTab()
+{
+  ui->tabWidget->addTab(WCalculatorPage::make().release(), WCalculatorPage::label());
 }
 
 void WMainWindow::newEncoderTab()

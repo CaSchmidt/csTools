@@ -33,31 +33,28 @@
 
 #include <memory>
 
-#include <QtWidgets/QMainWindow>
+#include "WTabPageBase.h"
 
 namespace Ui {
-  class WMainWindow;
+  class WCalculatorPage;
 } // namespace Ui
 
-class WMainWindow : public QMainWindow {
+class WCalculatorPage : public WTabPageBase {
   Q_OBJECT
-public:
-  WMainWindow(QWidget *parent = nullptr, const Qt::WindowFlags flags = Qt::WindowFlags());
-  ~WMainWindow();
 
-private slots:
-  void closeAllTabs();
-  void closeCurrentTab();
-  void newCalculatorTab();
-  void newEncoderTab();
-  void open();
-  void removeTab(const int index);
-  void save();
-  void saveAs();
+  struct ctor_tag {
+    ctor_tag() noexcept = default;
+  };
+
+public:
+  WCalculatorPage(QWidget *parent = nullptr, const Qt::WindowFlags flags = Qt::WindowFlags(),
+                  const ctor_tag& = ctor_tag());
+  ~WCalculatorPage();
+
+  static QString label();
+
+  static TabPagePtr make(QWidget *parent = nullptr, const Qt::WindowFlags flags = Qt::WindowFlags());
 
 private:
-  QString getFileName(const bool is_save, const QString& recent = QString());
-
-  std::unique_ptr<Ui::WMainWindow> ui;
-  QString _sessionFileName;
+  std::unique_ptr<Ui::WCalculatorPage> ui;
 };

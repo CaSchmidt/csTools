@@ -5,11 +5,13 @@ list(APPEND BinTools_FILES
 )
 
 list(APPEND BinTools_FORMS
+  forms/WCalculatorPage.ui
   forms/WEncoderPage.ui
   forms/WMainWindow.ui
 )
 
 list(APPEND BinTools_HEADERS
+  include/Calculator/WCalculatorPage.h
   include/Encoder/EncodeResultsModel.h
   include/Encoder/EncodeVariablesModel.h
   include/Encoder/WEncoderPage.h
@@ -21,6 +23,7 @@ list(APPEND BinTools_HEADERS
 )
 
 list(APPEND BinTools_SOURCES
+  src/Calculator/WCalculatorPage.cpp
   src/Encoder/EncodeResultsModel.cpp
   src/Encoder/EncodeVariablesModel.cpp
   src/Encoder/WEncoderPage.cpp

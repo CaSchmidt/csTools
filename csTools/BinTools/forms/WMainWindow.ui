@@ -63,6 +63,7 @@
     <property name="title">
      <string>&amp;Window</string>
     </property>
+    <addaction name="newCalculatorAction"/>
     <addaction name="newEncoderAction"/>
     <addaction name="separator"/>
     <addaction name="closeTabAction"/>
@@ -166,6 +167,14 @@
   <action name="clearOutputAction">
    <property name="text">
     <string>C&amp;lear output</string>
+   </property>
+  </action>
+  <action name="newCalculatorAction">
+   <property name="text">
+    <string>New &amp;Calculator</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+C</string>
    </property>
   </action>
  </widget>

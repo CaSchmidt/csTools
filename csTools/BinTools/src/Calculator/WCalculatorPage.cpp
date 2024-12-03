@@ -29,35 +29,29 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#pragma once
+#include "Calculator/WCalculatorPage.h"
+#include "ui_WCalculatorPage.h"
 
-#include <memory>
+////// public ////////////////////////////////////////////////////////////////
 
-#include <QtWidgets/QMainWindow>
+WCalculatorPage::WCalculatorPage(QWidget *parent, const Qt::WindowFlags flags,
+                                 const ctor_tag&)
+  : WTabPageBase(parent, flags)
+  , ui(std::make_unique<Ui::WCalculatorPage>())
+{
+  ui->setupUi(this);
+}
 
-namespace Ui {
-  class WMainWindow;
-} // namespace Ui
+WCalculatorPage::~WCalculatorPage()
+{
+}
 
-class WMainWindow : public QMainWindow {
-  Q_OBJECT
-public:
-  WMainWindow(QWidget *parent = nullptr, const Qt::WindowFlags flags = Qt::WindowFlags());
-  ~WMainWindow();
+QString WCalculatorPage::label()
+{
+  return tr("Calculator");
+}
 
-private slots:
-  void closeAllTabs();
-  void closeCurrentTab();
-  void newCalculatorTab();
-  void newEncoderTab();
-  void open();
-  void removeTab(const int index);
-  void save();
-  void saveAs();
-
-private:
-  QString getFileName(const bool is_save, const QString& recent = QString());
-
-  std::unique_ptr<Ui::WMainWindow> ui;
-  QString _sessionFileName;
-};
+TabPagePtr WCalculatorPage::make(QWidget *parent, const Qt::WindowFlags flags)
+{
+  return std::make_unique<WCalculatorPage>(parent, flags);
+}
