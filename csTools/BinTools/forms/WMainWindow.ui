@@ -76,10 +76,10 @@
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QDockWidget" name="outputDock">
    <property name="features">
-    <set>QDockWidget::DockWidgetFloatable</set>
+    <set>QDockWidget::DockWidgetFeature::DockWidgetFloatable</set>
    </property>
    <property name="allowedAreas">
-    <set>Qt::BottomDockWidgetArea</set>
+    <set>Qt::DockWidgetArea::BottomDockWidgetArea</set>
    </property>
    <property name="windowTitle">
     <string>Output</string>
