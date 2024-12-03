@@ -123,7 +123,7 @@
     <string>New &amp;Encoder</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+E</string>
+    <string>Ctrl+Shift+E</string>
    </property>
   </action>
   <action name="closeTabAction">

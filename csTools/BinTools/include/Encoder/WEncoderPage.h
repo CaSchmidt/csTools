@@ -51,6 +51,7 @@ class WEncoderPage : public WTabPageBase {
   struct ctor_tag {
     ctor_tag() noexcept = default;
   };
+
 public:
   WEncoderPage(QWidget *parent = nullptr, const Qt::WindowFlags flags = Qt::WindowFlags(),
                const ctor_tag& = ctor_tag());
