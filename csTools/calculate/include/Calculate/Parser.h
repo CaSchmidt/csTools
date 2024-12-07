@@ -345,6 +345,7 @@ namespace Calculate {
     static constexpr value_type ZERO = 0;
     static constexpr value_type  ONE = 1;
 
+    // Discard "a & +b" as valid expression.
     bool _have_insn{false};
 
     constexpr value_type minus(const value_type x)
