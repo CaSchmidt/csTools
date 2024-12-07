@@ -11,6 +11,7 @@ list(APPEND BinTools_FORMS
 )
 
 list(APPEND BinTools_HEADERS
+  include/Calculator/CalculatorVariablesModel.h
   include/Calculator/WCalculatorPage.h
   include/Encoder/EncodeResultsModel.h
   include/Encoder/EncodeVariablesModel.h
@@ -23,6 +24,7 @@ list(APPEND BinTools_HEADERS
 )
 
 list(APPEND BinTools_SOURCES
+  src/Calculator/CalculatorVariablesModel.cpp
   src/Calculator/WCalculatorPage.cpp
   src/Encoder/EncodeResultsModel.cpp
   src/Encoder/EncodeVariablesModel.cpp
