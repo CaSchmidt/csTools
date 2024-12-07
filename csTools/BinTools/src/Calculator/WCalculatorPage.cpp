@@ -29,8 +29,25 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
+#include <QtExamples/CodeEditor.h>
+
 #include "Calculator/WCalculatorPage.h"
 #include "ui_WCalculatorPage.h"
+
+////// Private ///////////////////////////////////////////////////////////////
+
+namespace impl_priv {
+
+  void setFont(QWidget *w, const int pointSize)
+  {
+    const QFontDatabase db;
+    const QFont font = db.font(QStringLiteral("Source Code Pro"),
+                               QStringLiteral("Regular"),
+                               pointSize);
+    w->setFont(font);
+  }
+
+} // namespace impl_priv
 
 ////// public ////////////////////////////////////////////////////////////////
 
@@ -40,6 +57,11 @@ WCalculatorPage::WCalculatorPage(QWidget *parent, const Qt::WindowFlags flags,
   , ui(std::make_unique<Ui::WCalculatorPage>())
 {
   ui->setupUi(this);
+
+  // Font ////////////////////////////////////////////////////////////////////
+
+  impl_priv::setFont(ui->expressionEdit, 12);
+  impl_priv::setFont(ui->historyEdit, 12);
 }
 
 WCalculatorPage::~WCalculatorPage()
