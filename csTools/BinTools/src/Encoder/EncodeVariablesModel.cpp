@@ -98,7 +98,7 @@ QVariant EncodeVariablesModel::headerData(const int section, const Qt::Orientati
       }
     } else if( orientation == Qt::Vertical ) {
       return section + 1;
-    }
+    } // Qt::Orientation
   } // Qt::ItemDataRole
 
   return QVariant();
