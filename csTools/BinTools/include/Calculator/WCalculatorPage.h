@@ -39,6 +39,12 @@ namespace Ui {
   class WCalculatorPage;
 } // namespace Ui
 
+namespace impl_calculator {
+  struct CalculatorPage;
+} // namespace impl_calculator
+
+using CalculatorPageData = std::unique_ptr<impl_calculator::CalculatorPage>;
+
 class WCalculatorPage : public WTabPageBase {
   Q_OBJECT
 
@@ -57,4 +63,5 @@ public:
 
 private:
   std::unique_ptr<Ui::WCalculatorPage> ui;
+  CalculatorPageData d;
 };

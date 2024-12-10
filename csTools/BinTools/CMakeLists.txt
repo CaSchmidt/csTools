@@ -11,7 +11,8 @@ list(APPEND BinTools_FORMS
 )
 
 list(APPEND BinTools_HEADERS
-  include/Calculator/CalculatorVariablesModel.h
+  include/Calculator/CalculateVariablesModel.h
+  include/Calculator/ParserConfig.h
   include/Calculator/WCalculatorPage.h
   include/Encoder/EncodeResultsModel.h
   include/Encoder/EncodeVariablesModel.h
@@ -24,7 +25,7 @@ list(APPEND BinTools_HEADERS
 )
 
 list(APPEND BinTools_SOURCES
-  src/Calculator/CalculatorVariablesModel.cpp
+  src/Calculator/CalculateVariablesModel.cpp
   src/Calculator/WCalculatorPage.cpp
   src/Encoder/EncodeResultsModel.cpp
   src/Encoder/EncodeVariablesModel.cpp
@@ -82,5 +83,5 @@ if(WIN32)
 endif()
 
 target_link_libraries(BinTools
-  PRIVATE encode
+  PRIVATE calculate encode
 )

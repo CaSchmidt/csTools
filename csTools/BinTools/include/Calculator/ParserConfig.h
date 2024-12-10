@@ -29,15 +29,12 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "Calculator/CalculatorVariablesModel.h"
+#pragma once
 
-////// public ////////////////////////////////////////////////////////////////
+#include <cstdint>
 
-CalculatorVariablesModel::CalculatorVariablesModel(QObject *parent)
-  : QAbstractTableModel(parent)
-{
-}
+namespace ParserConfig {
 
-CalculatorVariablesModel::~CalculatorVariablesModel()
-{
-}
+  using value_type = uint32_t;
+
+} // namespace ParserConfig

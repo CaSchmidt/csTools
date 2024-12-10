@@ -31,11 +31,43 @@
 
 #pragma once
 
+#include <vector>
+
 #include <QtCore/QAbstractTableModel>
 
-class CalculatorVariablesModel : public QAbstractTableModel {
+#include <Calculate/Parser.h>
+
+#include "Calculator/ParserConfig.h"
+
+class CalculateVariablesModel : public QAbstractTableModel {
   Q_OBJECT
 public:
-  CalculatorVariablesModel(QObject *parent = nullptr);
-  ~CalculatorVariablesModel();
+  using Parser = Calculate::Parser<ParserConfig::value_type>;
+
+  using Identifier = Parser::Identifier;
+  using      Names = std::vector<Identifier>;
+  using  Variables = Parser::Variables;
+
+  enum Columns : int {
+    COL_Variable = 0,
+    COL_Value,
+    NumColumns
+  };
+
+  CalculateVariablesModel(QObject *parent = nullptr);
+  ~CalculateVariablesModel();
+
+  int columnCount(const QModelIndex& parent = QModelIndex()) const;
+  QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
+  QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+  int rowCount(const QModelIndex& parent = QModelIndex()) const;
+
+  void set(Variables variables, Identifier result = Identifier());
+
+private:
+  void impl_clear();
+
+  Names      _names;
+  Identifier _result;
+  Variables  _variables;
 };

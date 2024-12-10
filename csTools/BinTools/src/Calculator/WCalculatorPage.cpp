@@ -34,20 +34,23 @@
 #include "Calculator/WCalculatorPage.h"
 #include "ui_WCalculatorPage.h"
 
+#include "Calculator/CalculateVariablesModel.h"
+
 ////// Private ///////////////////////////////////////////////////////////////
 
-namespace impl_priv {
+namespace impl_calculator {
 
-  void setFont(QWidget *w, const int pointSize)
-  {
-    const QFontDatabase db;
-    const QFont font = db.font(QStringLiteral("Source Code Pro"),
-                               QStringLiteral("Regular"),
-                               pointSize);
-    w->setFont(font);
-  }
+  struct CalculatorPage {
+    using Parser = Calculate::Parser<ParserConfig::value_type>;
 
-} // namespace impl_priv
+    CalculatorPage() noexcept = default;
+
+    CalculateVariablesModel *variables{nullptr};
+  };
+
+  static_assert( std::is_same_v<CalculatorPage::Parser::value_type,CalculateVariablesModel::Parser::value_type> );
+
+} // namespace impl_calculator
 
 ////// public ////////////////////////////////////////////////////////////////
 
@@ -55,13 +58,28 @@ WCalculatorPage::WCalculatorPage(QWidget *parent, const Qt::WindowFlags flags,
                                  const ctor_tag&)
   : WTabPageBase(parent, flags)
   , ui(std::make_unique<Ui::WCalculatorPage>())
+  , d(std::make_unique<impl_calculator::CalculatorPage>())
 {
   ui->setupUi(this);
 
   // Font ////////////////////////////////////////////////////////////////////
 
-  impl_priv::setFont(ui->expressionEdit, 12);
-  impl_priv::setFont(ui->historyEdit, 12);
+  ui->variablesView->viewport()->setFont(QFont(QStringLiteral("Source Code Pro")));
+
+  ui->expressionEdit->setFont(QFont(QStringLiteral("Source Code Pro"), 12));
+  ui->historyEdit->setFont(QFont(QStringLiteral("Source Code Pro"), 12));
+
+  // Data Model //////////////////////////////////////////////////////////////
+
+  d->variables = new CalculateVariablesModel(ui->variablesView);
+  ui->variablesView->setModel(d->variables);
+
+  CalculateVariablesModel::Parser::Variables test; // TODO
+  test.insert({"ans", 1});
+  test.insert({"clear", 7});
+  test.insert({"x", 2});
+  test.insert({"y", 3});
+  d->variables->set(test, "x");
 }
 
 WCalculatorPage::~WCalculatorPage()

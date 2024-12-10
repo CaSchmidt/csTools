@@ -62,6 +62,12 @@
          <property name="alternatingRowColors">
           <bool>true</bool>
          </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+         </property>
          <attribute name="verticalHeaderVisible">
           <bool>false</bool>
          </attribute>
@@ -69,7 +75,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout">
        <property name="spacing">
         <number>4</number>

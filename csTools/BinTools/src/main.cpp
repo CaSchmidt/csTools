@@ -40,6 +40,9 @@ int main(int argc, char **argv)
 {
   QApplication app(argc, argv);
 
+  QFontDatabase::addApplicationFont(QStringLiteral(":/fonts/SourceCodePro-Bold.ttf"));
+  QFontDatabase::addApplicationFont(QStringLiteral(":/fonts/SourceCodePro-BoldIt.ttf"));
+  QFontDatabase::addApplicationFont(QStringLiteral(":/fonts/SourceCodePro-It.ttf"));
   QFontDatabase::addApplicationFont(QStringLiteral(":/fonts/SourceCodePro-Regular.ttf"));
 
   cs::WidgetPtr w = std::make_unique<WMainWindow>();
