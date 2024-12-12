@@ -29,6 +29,9 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
+#include <QtWidgets/QAction>
+#include <QtWidgets/QMenu>
+
 #include <QtExamples/CodeEditor.h>
 
 #include "Calculator/WCalculatorPage.h"
@@ -49,6 +52,15 @@ namespace impl_calculator {
   };
 
   static_assert( std::is_same_v<CalculatorPage::Parser::value_type,CalculateVariablesModel::Parser::value_type> );
+
+  QAction *addAction(QMenu *menu, const QString& text, const bool on)
+  {
+    QAction *action = menu->addAction(text);
+    action->setCheckable(true);
+    action->setChecked(on);
+
+    return action;
+  }
 
 } // namespace impl_calculator
 
@@ -80,6 +92,13 @@ WCalculatorPage::WCalculatorPage(QWidget *parent, const Qt::WindowFlags flags,
   test.insert({"x", 2});
   test.insert({"y", 3});
   d->variables->set(test, "x");
+
+  // Context Menu ////////////////////////////////////////////////////////////
+
+  ui->variablesView->setContextMenuPolicy(Qt::CustomContextMenu);
+
+  connect(ui->variablesView, &QTableView::customContextMenuRequested,
+          this, &WCalculatorPage::showContextMenu);
 }
 
 WCalculatorPage::~WCalculatorPage()
@@ -94,4 +113,30 @@ QString WCalculatorPage::label()
 TabPagePtr WCalculatorPage::make(QWidget *parent, const Qt::WindowFlags flags)
 {
   return std::make_unique<WCalculatorPage>(parent, flags);
+}
+
+////// private slots /////////////////////////////////////////////////////////
+
+void WCalculatorPage::showContextMenu(const QPoint& pos)
+{
+  const QPoint globalPos = ui->variablesView->viewport()->mapToGlobal(pos);
+
+  const CalculateVariablesModel::Base base = d->variables->base();
+
+  QMenu menu(this);
+  QAction *decAction = impl_calculator::addAction(&menu, tr("Decimal"), base == CalculateVariablesModel::Decimal);
+  QAction *binAction = impl_calculator::addAction(&menu, tr("Binary"), base == CalculateVariablesModel::Binary);
+  QAction *hexAction = impl_calculator::addAction(&menu, tr("Hexadecimal"), base == CalculateVariablesModel::Hexadecimal);
+
+  QAction *choice = menu.exec(globalPos);
+  if(        choice == decAction ) {
+    d->variables->setBase(CalculateVariablesModel::Decimal);
+    ui->variablesView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
+  } else if( choice == binAction ) {
+    d->variables->setBase(CalculateVariablesModel::Binary);
+    ui->variablesView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
+  } else if( choice == hexAction ) {
+    d->variables->setBase(CalculateVariablesModel::Hexadecimal);
+    ui->variablesView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
+  }
 }

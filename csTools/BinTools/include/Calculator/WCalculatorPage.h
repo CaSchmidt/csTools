@@ -61,6 +61,9 @@ public:
 
   static TabPagePtr make(QWidget *parent = nullptr, const Qt::WindowFlags flags = Qt::WindowFlags());
 
+private slots:
+  void showContextMenu(const QPoint& pos);
+
 private:
   std::unique_ptr<Ui::WCalculatorPage> ui;
   CalculatorPageData d;

@@ -69,8 +69,14 @@ QVariant CalculateVariablesModel::data(const QModelIndex& index, int role) const
     if(        column == COL_Variable ) {
       return cs::toQString(cs::toUtf8StringView(name));
     } else if( column == COL_Value ) {
-      const auto value = _variables.at(name);
-      return value; // TODO
+      const auto     value = _variables.at(name);
+      const QString valStr = _base == Binary
+          ? QStringLiteral("%1").arg(value, sizeof(value)*8, 2, cs::L1C('0'))
+          : _base == Hexadecimal
+            ? QStringLiteral("%1").arg(value, sizeof(value)*2, 16, cs::L1C('0'))
+            : QString::number(value);
+
+      return valStr;
     }
   } else if( role == Qt::FontRole ) {
     QWidget    *view = qobject_cast<QWidget*>(parent());
@@ -94,7 +100,13 @@ QVariant CalculateVariablesModel::headerData(int section, Qt::Orientation orient
       if(        section == COL_Variable ) {
         return tr("Variable");
       } else if( section == COL_Value ) {
-        return tr("Value");
+        const QString postfix = _base == Binary
+            ? QStringLiteral(" (bin)")
+            : _base == Hexadecimal
+              ? QStringLiteral(" (hex)")
+              : QString();
+
+        return tr("Value") + postfix;
       }
     } else if( orientation == Qt::Vertical ) {
       return section + 1;
@@ -107,6 +119,21 @@ QVariant CalculateVariablesModel::headerData(int section, Qt::Orientation orient
 int CalculateVariablesModel::rowCount(const QModelIndex& /*parent*/) const
 {
   return static_cast<int>(_names.size());
+}
+
+CalculateVariablesModel::Base CalculateVariablesModel::base() const
+{
+  return _base;
+}
+
+void CalculateVariablesModel::setBase(const Base b)
+{
+  _base = b;
+
+  emit headerDataChanged(Qt::Horizontal, COL_Value, COL_Value);
+  if( rowCount() > 0 ) {
+    emit dataChanged(index(0, COL_Value), index(rowCount() - 1, COL_Value));
+  }
 }
 
 void CalculateVariablesModel::set(Variables variables, Identifier result)

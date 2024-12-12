@@ -48,6 +48,12 @@ public:
   using      Names = std::vector<Identifier>;
   using  Variables = Parser::Variables;
 
+  enum Base {
+    Decimal = 0,
+    Binary,
+    Hexadecimal
+  };
+
   enum Columns : int {
     COL_Variable = 0,
     COL_Value,
@@ -62,11 +68,14 @@ public:
   QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
   int rowCount(const QModelIndex& parent = QModelIndex()) const;
 
+  Base base() const;
+  void setBase(const Base b);
   void set(Variables variables, Identifier result = Identifier());
 
 private:
   void impl_clear();
 
+  Base       _base{Decimal};
   Names      _names;
   Identifier _result;
   Variables  _variables;
