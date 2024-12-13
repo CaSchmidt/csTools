@@ -34,6 +34,7 @@
 #include <list>
 #include <unordered_map>
 
+#include <cs/Core/Container.h>
 #include <cs/Lexer/AbstractParser.h>
 #include <cs/Lexer/Scanners.h>
 #include <cs/Lexer/TokenUtil.h>
@@ -330,7 +331,7 @@ namespace Calculate {
         scan();
       }
 
-      const Identifier assignee = is_ident
+      assignee = is_ident
           ? currentValue<Identifier>()
           : Identifier("ans");
 
@@ -381,17 +382,15 @@ namespace Calculate {
 
     std::list<Identifier> listVariables() const
     {
-      std::list<Identifier> result;
+      const auto lambda_ex = [](const typename Variables::value_type& value) -> Identifier {
+        return value.first;
+      };
 
-      for(const typename Variables::value_type& var : variables) {
-        result.push_back(var.first);
-      }
-      result.sort();
-
-      return result;
+      return cs::toSequence<std::list>(variables.begin(), variables.end(), lambda_ex, true);
     }
 
-    Variables variables;
+    Identifier assignee;
+    Variables  variables;
   };
 
 } // namespace Calculate
