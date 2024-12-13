@@ -32,12 +32,14 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QMenu>
 
+#include <cs/Core/QStringUtil.h>
 #include <QtExamples/CodeEditor.h>
 
 #include "Calculator/WCalculatorPage.h"
 #include "ui_WCalculatorPage.h"
 
 #include "Calculator/CalculateVariablesModel.h"
+#include "global.h"
 
 ////// Private ///////////////////////////////////////////////////////////////
 
@@ -48,6 +50,7 @@ namespace impl_calculator {
 
     CalculatorPage() noexcept = default;
 
+    Parser parser;
     CalculateVariablesModel *variables{nullptr};
   };
 
@@ -86,12 +89,14 @@ WCalculatorPage::WCalculatorPage(QWidget *parent, const Qt::WindowFlags flags,
   d->variables = new CalculateVariablesModel(ui->variablesView);
   ui->variablesView->setModel(d->variables);
 
+#if 0
   CalculateVariablesModel::Parser::Variables test; // TODO
   test.insert({"ans", 1});
   test.insert({"clear", 7});
   test.insert({"x", 2});
   test.insert({"y", 3});
   d->variables->set(test, "x");
+#endif
 
   // Context Menu ////////////////////////////////////////////////////////////
 
@@ -99,6 +104,11 @@ WCalculatorPage::WCalculatorPage(QWidget *parent, const Qt::WindowFlags flags,
 
   connect(ui->variablesView, &QTableView::customContextMenuRequested,
           this, &WCalculatorPage::showContextMenu);
+
+  // Signals & Slots /////////////////////////////////////////////////////////
+
+  connect(ui->expressionEdit, &QLineEdit::returnPressed,
+          this, &WCalculatorPage::parseExpression);
 }
 
 WCalculatorPage::~WCalculatorPage()
@@ -116,6 +126,14 @@ TabPagePtr WCalculatorPage::make(QWidget *parent, const Qt::WindowFlags flags)
 }
 
 ////// private slots /////////////////////////////////////////////////////////
+
+void WCalculatorPage::parseExpression()
+{
+  if( !parseInput(ui->expressionEdit->text()) ) {
+    return;
+  }
+  ui->expressionEdit->clear();
+}
 
 void WCalculatorPage::showContextMenu(const QPoint& pos)
 {
@@ -139,4 +157,35 @@ void WCalculatorPage::showContextMenu(const QPoint& pos)
     d->variables->setBase(CalculateVariablesModel::Hexadecimal);
     ui->variablesView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
   }
+}
+
+////// private ///////////////////////////////////////////////////////////////
+
+void WCalculatorPage::appendInput(const QString& input)
+{
+  const QStringList lines = input.split(cs::L1C('\n'), QString::SkipEmptyParts);
+  for(const QString& line : lines) {
+    ui->historyEdit->appendPlainText(line);
+  }
+}
+
+bool WCalculatorPage::parseInput(const QString& text)
+{
+  return parseInput(cs::toString(cs::toUtf8String(text)));
+}
+
+bool WCalculatorPage::parseInput(const std::string& text)
+{
+  using Parser = impl_calculator::CalculatorPage::Parser;
+
+  const std::string input = Parser::fixInput(text);
+  if( !d->parser.parse(input, global::logger) ) {
+    return false;
+  }
+
+  d->variables->set(d->parser.variables, d->parser.assignee);
+
+  appendInput(cs::toQString(cs::toUtf8StringView(input)));
+
+  return true;
 }
