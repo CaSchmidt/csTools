@@ -70,13 +70,13 @@ public:
 
   Base base() const;
   void setBase(const Base b);
-  void set(Variables variables, Identifier result = Identifier());
+  void set(Variables variables, Identifier assignee = Identifier());
 
 private:
   void impl_clear();
 
+  Identifier _assignee;
   Base       _base{Decimal};
   Names      _names;
-  Identifier _result;
   Variables  _variables;
 };

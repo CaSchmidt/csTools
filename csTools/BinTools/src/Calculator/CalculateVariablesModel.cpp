@@ -83,7 +83,7 @@ QVariant CalculateVariablesModel::data(const QModelIndex& index, int role) const
     const QFont font = view != nullptr
         ? view->font()
         : QFont();
-    const int weight = !_result.empty()  &&  _result == name
+    const int weight = !_assignee.empty()  &&  _assignee == name
         ? QFont::Bold
         : QFont::Normal;
 
@@ -136,15 +136,15 @@ void CalculateVariablesModel::setBase(const Base b)
   }
 }
 
-void CalculateVariablesModel::set(Variables variables, Identifier result)
+void CalculateVariablesModel::set(Variables variables, Identifier assignee)
 {
   beginResetModel();
 
   impl_clear();
 
   _variables = std::move(variables);
-  if( !result.empty()  &&  _variables.contains(result) ) {
-    _result = std::move(result);
+  if( !assignee.empty()  &&  _variables.contains(assignee) ) {
+    _assignee = std::move(assignee);
   }
 
   const auto lambda_ex = [](const Variables::value_type& value) -> Identifier {
@@ -160,7 +160,7 @@ void CalculateVariablesModel::set(Variables variables, Identifier result)
 
 void CalculateVariablesModel::impl_clear()
 {
+  _assignee.clear();
   _names.clear();
-  _result.clear();
   _variables.clear();
 }
