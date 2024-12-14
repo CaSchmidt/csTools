@@ -102,12 +102,14 @@ void WMainWindow::closeCurrentTab()
 
 void WMainWindow::newCalculatorTab()
 {
-  ui->tabWidget->addTab(WCalculatorPage::make().release(), WCalculatorPage::label());
+  const int index = ui->tabWidget->addTab(WCalculatorPage::make().release(), WCalculatorPage::label());
+  ui->tabWidget->setCurrentIndex(index);
 }
 
 void WMainWindow::newEncoderTab()
 {
-  ui->tabWidget->addTab(WEncoderPage::make().release(), WEncoderPage::label());
+  const int index = ui->tabWidget->addTab(WEncoderPage::make().release(), WEncoderPage::label());
+  ui->tabWidget->setCurrentIndex(index);
 }
 
 void WMainWindow::open()
