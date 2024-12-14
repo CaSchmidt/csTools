@@ -42,7 +42,7 @@
 CalculateVariablesModel::CalculateVariablesModel(QObject *parent)
   : QAbstractTableModel(parent)
 {
-  impl_clear();
+  clear();
 }
 
 CalculateVariablesModel::~CalculateVariablesModel()
@@ -138,9 +138,9 @@ void CalculateVariablesModel::setBase(const Base b)
 
 void CalculateVariablesModel::set(Variables variables, Identifier assignee)
 {
-  beginResetModel();
+  clear();
 
-  impl_clear();
+  beginResetModel();
 
   _variables = std::move(variables);
   if( !assignee.empty()  &&  _variables.contains(assignee) ) {
@@ -156,11 +156,17 @@ void CalculateVariablesModel::set(Variables variables, Identifier assignee)
   endResetModel();
 }
 
-////// private ///////////////////////////////////////////////////////////////
+////// public slots //////////////////////////////////////////////////////////
 
-void CalculateVariablesModel::impl_clear()
+void CalculateVariablesModel::clear()
 {
+  beginResetModel();
+
   _assignee.clear();
   _names.clear();
   _variables.clear();
+
+  _base = Decimal;
+
+  endResetModel();
 }

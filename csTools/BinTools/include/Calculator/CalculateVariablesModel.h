@@ -72,9 +72,10 @@ public:
   void setBase(const Base b);
   void set(Variables variables, Identifier assignee = Identifier());
 
-private:
-  void impl_clear();
+public slots:
+  void clear();
 
+private:
   Identifier _assignee;
   Base       _base{Decimal};
   Names      _names;
