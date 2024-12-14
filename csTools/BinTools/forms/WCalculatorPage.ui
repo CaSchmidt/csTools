@@ -118,7 +118,7 @@
           <item row="1" column="1">
            <widget class="QPushButton" name="clearButton">
             <property name="text">
-             <string>Clear</string>
+             <string>Clear variables</string>
             </property>
            </widget>
           </item>

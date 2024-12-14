@@ -52,6 +52,16 @@ namespace impl_calculator {
 
     Parser parser;
     CalculateVariablesModel *variables{nullptr};
+
+    void clear()
+    {
+      parser.assignee.clear();
+      parser.variables.clear();
+
+      if( variables != nullptr ) {
+        variables->clear();
+      }
+    }
   };
 
   static_assert( std::is_same_v<CalculatorPage::Parser::value_type,CalculateVariablesModel::Parser::value_type> );
@@ -107,8 +117,12 @@ WCalculatorPage::WCalculatorPage(QWidget *parent, const Qt::WindowFlags flags,
 
   // Signals & Slots /////////////////////////////////////////////////////////
 
+  connect(ui->clearButton, &QPushButton::clicked,
+          this, &WCalculatorPage::clear);
   connect(ui->expressionEdit, &QLineEdit::returnPressed,
           this, &WCalculatorPage::parseExpression);
+  connect(ui->reevaluateButton, &QPushButton::clicked,
+          this, &WCalculatorPage::evaluate);
 }
 
 WCalculatorPage::~WCalculatorPage()
@@ -126,6 +140,22 @@ TabPagePtr WCalculatorPage::make(QWidget *parent, const Qt::WindowFlags flags)
 }
 
 ////// private slots /////////////////////////////////////////////////////////
+
+void WCalculatorPage::clear(const bool clear_variables)
+{
+  d->clear();
+
+  if( clear_variables ) {
+    ui->historyEdit->clear();
+  }
+}
+
+void WCalculatorPage::evaluate()
+{
+  const QString text = ui->historyEdit->toPlainText();
+  clear(true);
+  parseInput(text);
+}
 
 void WCalculatorPage::parseExpression()
 {
