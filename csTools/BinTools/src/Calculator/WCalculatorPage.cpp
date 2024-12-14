@@ -99,15 +99,6 @@ WCalculatorPage::WCalculatorPage(QWidget *parent, const Qt::WindowFlags flags,
   d->variables = new CalculateVariablesModel(ui->variablesView);
   ui->variablesView->setModel(d->variables);
 
-#if 0
-  CalculateVariablesModel::Parser::Variables test; // TODO
-  test.insert({"ans", 1});
-  test.insert({"clear", 7});
-  test.insert({"x", 2});
-  test.insert({"y", 3});
-  d->variables->set(test, "x");
-#endif
-
   // Context Menu ////////////////////////////////////////////////////////////
 
   ui->variablesView->setContextMenuPolicy(Qt::CustomContextMenu);
