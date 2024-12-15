@@ -57,6 +57,9 @@ public:
                   const ctor_tag& = ctor_tag());
   ~WCalculatorPage();
 
+  bool load(const QDomNode& node);
+  void save(QDomNode& parent) const;
+
   static QString label();
 
   static TabPagePtr make(QWidget *parent = nullptr, const Qt::WindowFlags flags = Qt::WindowFlags());

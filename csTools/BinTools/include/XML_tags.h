@@ -32,9 +32,11 @@
 #pragma once
 
 #define XML_BinTools   QStringLiteral("BinToolsSession")
+#define XML_Calculator QStringLiteral("Calculator")
 #define XML_Editor     QStringLiteral("Editor")
 #define XML_Encoder    QStringLiteral("Encoder")
 #define XML_false      QStringLiteral("false")
+#define XML_History    QStringLiteral("History")
 #define XML_MSBfirst   QStringLiteral("MSBfirst")
 #define XML_Name       QStringLiteral("Name")
 #define XML_Page       QStringLiteral("Page")

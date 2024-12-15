@@ -32,6 +32,7 @@
 #include <QtWidgets/QTabWidget>
 #include <QtXml/QDomDocument>
 
+#include "Calculator/WCalculatorPage.h"
 #include "Encoder/WEncoderPage.h"
 #include "XML_io.h"
 #include "XML_tags.h"
@@ -55,14 +56,18 @@ bool xmlRead(QTabWidget *tabWidget, const QString& content)
   for(QDomElement xml_page = xml_root.firstChildElement(XML_Page);
       !xml_page.isNull();
       xml_page = xml_page.nextSiblingElement(XML_Page)) {
-    TabPagePtr page;
 
-    page = WEncoderPage::make();
-    if( page  &&  page->load(xml_page) ) {
-      tabWidget->addTab(page.release(), WEncoderPage::label());
+    if(         TabPagePtr enc = WEncoderPage::make(); enc  &&  enc->load(xml_page) ) {
+      tabWidget->addTab(enc.release(), WEncoderPage::label());
       continue;
+
+    } else if ( TabPagePtr calc = WCalculatorPage::make(); calc  &&  calc->load(xml_page) ) {
+      tabWidget->addTab(calc.release(), WCalculatorPage::label());
+      continue;
+
     }
-  }
+
+  } // For Each Page in XML
 
   return true;
 }

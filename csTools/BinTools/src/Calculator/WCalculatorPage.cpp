@@ -33,6 +33,7 @@
 #include <QtWidgets/QMenu>
 
 #include <cs/Core/QStringUtil.h>
+#include <cs/Qt/XML.h>
 #include <QtExamples/CodeEditor.h>
 
 #include "Calculator/WCalculatorPage.h"
@@ -40,6 +41,7 @@
 
 #include "Calculator/CalculateVariablesModel.h"
 #include "global.h"
+#include "XML_tags.h"
 
 ////// Private ///////////////////////////////////////////////////////////////
 
@@ -118,6 +120,36 @@ WCalculatorPage::WCalculatorPage(QWidget *parent, const Qt::WindowFlags flags,
 
 WCalculatorPage::~WCalculatorPage()
 {
+}
+
+bool WCalculatorPage::load(const QDomNode& node)
+{
+  const QDomElement xml_page = node.toElement();
+  if( xml_page.isNull()  ||
+      xml_page.tagName() != XML_Page  ||
+      xml_page.attribute(XML_type) != XML_Calculator ) {
+    return false;
+  }
+
+  const QString text = cs::xmlToValue<QString>(xml_page.firstChildElement(XML_History),
+                                               XML_History);
+
+  ui->expressionEdit->clear();
+  clear(true);
+  parseInput(text);
+
+  return true;
+}
+
+void WCalculatorPage::save(QDomNode& parent) const
+{
+  if( parent.isNull() ) {
+    return;
+  }
+
+  QDomNode xml_page = cs::xmlAppend(parent, XML_Page, {XML_type, XML_Calculator});
+
+  cs::xmlAppend(xml_page, XML_History, ui->historyEdit->toPlainText());
 }
 
 QString WCalculatorPage::label()
