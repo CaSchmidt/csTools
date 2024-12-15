@@ -62,7 +62,7 @@ public:
   static TabPagePtr make(QWidget *parent = nullptr, const Qt::WindowFlags flags = Qt::WindowFlags());
 
 private slots:
-  void clear(const bool clear_variables = false);
+  void clear(const bool clear_history = false);
   void evaluate();
   void parseExpression();
   void showContextMenu(const QPoint& pos);

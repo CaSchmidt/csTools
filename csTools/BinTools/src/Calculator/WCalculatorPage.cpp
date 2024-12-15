@@ -108,7 +108,7 @@ WCalculatorPage::WCalculatorPage(QWidget *parent, const Qt::WindowFlags flags,
 
   // Signals & Slots /////////////////////////////////////////////////////////
 
-  connect(ui->clearButton, &QPushButton::clicked,
+  connect(ui->clearVariablesButton, &QPushButton::clicked,
           this, &WCalculatorPage::clear);
   connect(ui->expressionEdit, &QLineEdit::returnPressed,
           this, &WCalculatorPage::parseExpression);
@@ -132,11 +132,11 @@ TabPagePtr WCalculatorPage::make(QWidget *parent, const Qt::WindowFlags flags)
 
 ////// private slots /////////////////////////////////////////////////////////
 
-void WCalculatorPage::clear(const bool clear_variables)
+void WCalculatorPage::clear(const bool clear_history)
 {
   d->clear();
 
-  if( clear_variables ) {
+  if( clear_history ) {
     ui->historyEdit->clear();
   }
 }
