@@ -31,50 +31,10 @@
 
 #pragma once
 
-#include <utility>
-#include <vector>
+#include <cstdint>
 
-#include <Encode/Engine.h>
+namespace EncoderConfig {
 
-#include <QtCore/QAbstractTableModel>
+  using value_type = uint64_t;
 
-#include "Encoder/EncoderConfig.h"
-
-class EncodeVariablesModel : public QAbstractTableModel {
-  Q_OBJECT
-public:
-  using EnginePtr = Encode::EnginePtr<EncoderConfig::value_type>;
-  using     Store = cs::element_of_ptr_t<EnginePtr>::Store;
-
-  using value_type = cs::element_of_ptr_t<EnginePtr>::value_type;
-
-  enum Columns : int {
-    COL_Variable = 0,
-    COL_Value,
-    NumColumns
-  };
-
-  EncodeVariablesModel(QObject *parent = nullptr);
-  ~EncodeVariablesModel();
-
-  int columnCount(const QModelIndex& parent = QModelIndex()) const;
-  QVariant data(const QModelIndex& index, const int role = Qt::DisplayRole) const;
-  Qt::ItemFlags flags(const QModelIndex& index = QModelIndex()) const;
-  QVariant headerData(const int section, const Qt::Orientation orientation,
-                      const int role = Qt::DisplayRole) const;
-  int rowCount(const QModelIndex& parent = QModelIndex()) const;
-
-  bool setData(const QModelIndex& index, const QVariant& value,
-               const int role = Qt::EditRole);
-
-  void clear();
-  bool addVariables(const EnginePtr& engine);
-  void set(const Store& store);
-  Store store() const;
-
-private:
-  using Variable  = std::pair<QString,value_type>;
-  using Variables = std::vector<Variable>;
-
-  Variables _variables;
-};
+} // namespace EncoderConfig

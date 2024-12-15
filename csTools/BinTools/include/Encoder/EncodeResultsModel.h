@@ -37,10 +37,12 @@
 
 #include <QtCore/QAbstractTableModel>
 
+#include "Encoder/EncoderConfig.h"
+
 class EncodeResultsModel : public QAbstractTableModel {
   Q_OBJECT
 public:
-  using EnginePtr = Encode::EnginePtr<uint64_t>;
+  using EnginePtr = Encode::EnginePtr<EncoderConfig::value_type>;
   using     Store = cs::element_of_ptr_t<EnginePtr>::Store;
 
   using value_type = cs::element_of_ptr_t<EnginePtr>::value_type;

@@ -50,7 +50,7 @@
 namespace impl_encoder {
 
   struct EncoderPage {
-    using Parser = Encode::Parser<uint64_t>;
+    using Parser = Encode::Parser<EncoderConfig::value_type>;
 
     EncoderPage() noexcept = default;
 

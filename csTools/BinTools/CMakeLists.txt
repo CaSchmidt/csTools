@@ -14,6 +14,7 @@ list(APPEND BinTools_HEADERS
   include/Calculator/CalculateVariablesModel.h
   include/Calculator/CalculatorConfig.h
   include/Calculator/WCalculatorPage.h
+  include/Encoder/EncoderConfig.h
   include/Encoder/EncodeResultsModel.h
   include/Encoder/EncodeVariablesModel.h
   include/Encoder/WEncoderPage.h
