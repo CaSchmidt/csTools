@@ -12,7 +12,7 @@ list(APPEND BinTools_FORMS
 
 list(APPEND BinTools_HEADERS
   include/Calculator/CalculateVariablesModel.h
-  include/Calculator/ParserConfig.h
+  include/Calculator/CalculatorConfig.h
   include/Calculator/WCalculatorPage.h
   include/Encoder/EncodeResultsModel.h
   include/Encoder/EncodeVariablesModel.h

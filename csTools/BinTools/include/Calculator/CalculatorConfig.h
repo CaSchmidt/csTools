@@ -33,8 +33,8 @@
 
 #include <cstdint>
 
-namespace ParserConfig {
+namespace CalculatorConfig {
 
   using value_type = uint32_t;
 
-} // namespace ParserConfig
+} // namespace CalculatorConfig

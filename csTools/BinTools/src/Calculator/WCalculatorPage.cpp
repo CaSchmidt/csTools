@@ -46,7 +46,7 @@
 namespace impl_calculator {
 
   struct CalculatorPage {
-    using Parser = Calculate::Parser<ParserConfig::value_type>;
+    using Parser = Calculate::Parser<CalculatorConfig::value_type>;
 
     CalculatorPage() noexcept = default;
 

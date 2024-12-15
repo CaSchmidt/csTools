@@ -37,12 +37,12 @@
 
 #include <Calculate/Parser.h>
 
-#include "Calculator/ParserConfig.h"
+#include "Calculator/CalculatorConfig.h"
 
 class CalculateVariablesModel : public QAbstractTableModel {
   Q_OBJECT
 public:
-  using Parser = Calculate::Parser<ParserConfig::value_type>;
+  using Parser = Calculate::Parser<CalculatorConfig::value_type>;
 
   using Identifier = Parser::Identifier;
   using      Names = std::vector<Identifier>;
