@@ -73,7 +73,7 @@ QVariant CalculateVariablesModel::data(const QModelIndex& index, int role) const
       const QString valStr = _base == Binary
           ? QStringLiteral("%1").arg(value, sizeof(value)*8, 2, cs::L1C('0'))
           : _base == Hexadecimal
-            ? QStringLiteral("%1").arg(value, sizeof(value)*2, 16, cs::L1C('0'))
+            ? (QStringLiteral("%1").arg(value, sizeof(value)*2, 16, cs::L1C('0'))).toUpper()
             : QString::number(value);
 
       return valStr;
