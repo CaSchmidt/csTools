@@ -37,6 +37,24 @@
 #include "XML_io.h"
 #include "XML_tags.h"
 
+namespace impl_xml {
+
+  template<typename PageT>
+  inline bool load(QTabWidget *tabWidget, const QDomElement& xml_page)
+  {
+    TabPagePtr page = PageT::make();
+
+    if( !page  ||  !page->load(xml_page) ) {
+      return false;
+    }
+
+    tabWidget->addTab(page.release(), PageT::label());
+
+    return true;
+  }
+
+} // namespace impl_xml
+
 bool xmlRead(QTabWidget *tabWidget, const QString& content)
 {
   if( content.isEmpty() ) {
@@ -57,14 +75,12 @@ bool xmlRead(QTabWidget *tabWidget, const QString& content)
       !xml_page.isNull();
       xml_page = xml_page.nextSiblingElement(XML_Page)) {
 
-    if(         TabPagePtr enc = WEncoderPage::make(); enc  &&  enc->load(xml_page) ) {
-      tabWidget->addTab(enc.release(), WEncoderPage::label());
+    if( impl_xml::load<WCalculatorPage>(tabWidget, xml_page) ) {
       continue;
+    }
 
-    } else if ( TabPagePtr calc = WCalculatorPage::make(); calc  &&  calc->load(xml_page) ) {
-      tabWidget->addTab(calc.release(), WCalculatorPage::label());
+    if( impl_xml::load<WEncoderPage>(tabWidget, xml_page) ) {
       continue;
-
     }
 
   } // For Each Page in XML
